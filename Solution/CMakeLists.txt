@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.23)
+project(LeetCode)
+
+set(CMAKE_CXX_STANDARD 11)
+
+
+add_executable(704BinarySearch 704BinarySearch.cpp)
+add_executable(35SearchInsertPosition 35SearchInsertPosition.cpp)
+add_executable(34FindFirstandLastPositionofElementinSortedArray 34FindFirstandLastPositionofElementinSortedArray.cpp)
