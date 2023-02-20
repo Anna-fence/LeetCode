@@ -6,37 +6,50 @@ class Solution {
 public:
     vector<int> searchRange(vector<int>& nums, int target) {
         vector<int> positions = {};
+        int leftBound = findLeftBound(nums, target);
+        int rightBound = findRightBound(nums, target);
+        if (leftBound == -2 || rightBound == -2) {
+            positions = {-1, -1};
+        }
+        else if (rightBound - leftBound > 1) {
+            positions = {leftBound + 1, rightBound - 1};
+        }
+        else
+            positions = {-1, -1};
+        return positions;
+    }
+private:
+    int findLeftBound(vector<int>& nums, int target) {
         int left = 0;
-        int right = nums.size();
-        int mid;
-        while (left < right) {
-            mid = left + (right - left) / 2;
+        int right = nums.size() - 1;
+        int leftBound = -2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
             if (nums[mid] < target) {
                 left = mid + 1;
             }
-            else if (nums[mid] > target) {
-                right = mid;
+            else {
+                right = mid - 1;
+                leftBound = right;
+            }
+        }
+        return leftBound;
+    }
+    int findRightBound(vector<int>& nums, int target) {
+        int left = 0;
+        int right = nums.size() - 1;
+        int rightBound = -2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] > target) {
+                right = mid - 1;
             }
             else {
-                if (nums[mid + 1] == target) {
-                    positions.push_back(mid);
-                    positions.push_back(mid + 1);
-                }
-                else if (nums[mid - 1] == target) {
-                    positions.push_back(mid);
-                    positions.push_back(mid - 1);
-                }
-                else {
-                    positions.push_back(mid);
-                    positions.push_back(mid);
-                }
+                left = mid + 1;
+                rightBound = left;
             }
         }
-        if (positions.empty()) {
-            positions.push_back(-1);
-            positions.push_back(-1);
-        }
-        return positions;
+        return rightBound;
     }
 };
 
